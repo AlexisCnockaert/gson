@@ -74,7 +74,7 @@ public final class JsonTreeWriter extends JsonWriter {
   }
 
   private JsonElement peek() {
-    return stack.get(stack.size() - 1);
+    return stack.isEmpty() ? null : stack.get(stack.size() - 1);
   }
 
   private void put(JsonElement value) {
