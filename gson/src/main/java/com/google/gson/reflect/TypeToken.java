@@ -26,6 +26,8 @@ import java.lang.reflect.WildcardType;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import lombok.Getter;
+
 
 /**
  * Represents a generic type {@code T}. Java doesn't yet provide a way to represent generic types,
@@ -52,8 +54,11 @@ import java.util.Objects;
  * @author Jesse Wilson
  */
 public class TypeToken<T> {
+  @Getter
   private final Class<? super T> rawType;
+  @Getter
   private final Type type;
+  @Getter
   private final int hashCode;
 
   /**
@@ -157,16 +162,7 @@ public class TypeToken<T> {
     }
   }
 
-  /** Returns the raw (non-generic) type for this type. */
-  public final Class<? super T> getRawType() {
-    return rawType;
-  }
-
-  /** Gets underlying {@code Type} instance. */
-  public final Type getType() {
-    return type;
-  }
-
+ 
   /**
    * Check if this type is assignable from the given class object.
    *
@@ -336,10 +332,6 @@ public class TypeToken<T> {
             && to.equals(typeMap.get(((TypeVariable<?>) from).getName())));
   }
 
-  @Override
-  public final int hashCode() {
-    return this.hashCode;
-  }
 
   @Override
   public final boolean equals(Object o) {
