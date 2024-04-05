@@ -336,4 +336,24 @@ public final class JsonTreeWriterTest {
             "getSerializeNulls()");
     MoreAsserts.assertOverridesMethods(JsonWriter.class, JsonTreeWriter.class, ignoredMethods);
   }
+  /**
+ * This test verifies the behavior of the JsonTreeWriter class when trying to write a name as a top-level value in a JSON array.
+ */
+  @Test
+  public void testNameAsTopLevelValueInArray() throws IOException {
+      JsonTreeWriter writer = new JsonTreeWriter();
+      
+      writer.beginArray();
+      IllegalStateException e = assertThrows(IllegalStateException.class, () -> writer.name("hello"));
+      assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a name.");
+  
+      writer.value(12);
+      e = assertThrows(IllegalStateException.class, () -> writer.name("hello"));
+      assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a name.");
+  
+      writer.endArray();
+  
+      assertThat(writer.get().toString()).isEqualTo("[12]");
+  }
 }
+
