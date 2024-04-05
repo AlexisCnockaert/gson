@@ -59,7 +59,7 @@ public final class JsonTreeWriter extends JsonWriter {
   private String pendingName;
 
   /** the JSON element constructed by this writer. */
-  private JsonElement product = JsonNull.INSTANCE; // TODO: is this really what we want?;
+  private JsonElement jsonElement = JsonNull.INSTANCE; // TODO: is this really what we want?;
 
   public JsonTreeWriter() {
     super(UNWRITABLE_WRITER);
@@ -70,7 +70,7 @@ public final class JsonTreeWriter extends JsonWriter {
     if (!stack.isEmpty()) {
       throw new IllegalStateException("Expected one JSON element but was " + stack);
     }
-    return product;
+    return jsonElement;
   }
 
   private JsonElement peek() {
@@ -85,7 +85,7 @@ public final class JsonTreeWriter extends JsonWriter {
       }
       pendingName = null;
     } else if (stack.isEmpty()) {
-      product = value;
+      jsonElement = value;
     } else {
       JsonElement element = peek();
       if (element instanceof JsonArray) {
@@ -144,7 +144,7 @@ public final class JsonTreeWriter extends JsonWriter {
 
   @CanIgnoreReturnValue
   @Override
-  public JsonWriter name(String name) throws IOException {
+  public JsonWriter writeFieldName(String name) throws IOException {
     Objects.requireNonNull(name, "name == null");
     if (stack.isEmpty() || pendingName != null) {
       throw new IllegalStateException("Did not expect a name");

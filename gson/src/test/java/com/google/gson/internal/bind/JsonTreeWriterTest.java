@@ -62,8 +62,8 @@ public final class JsonTreeWriterTest {
   public void testObject() throws IOException {
     JsonTreeWriter writer = new JsonTreeWriter();
     writer.beginObject();
-    writer.name("A").value(1);
-    writer.name("B").value(2);
+    writer.writeFieldName("A").value(1);
+    writer.writeFieldName("B").value(2);
     writer.endObject();
     assertThat(writer.get().toString()).isEqualTo("{\"A\":1,\"B\":2}");
   }
@@ -72,13 +72,13 @@ public final class JsonTreeWriterTest {
   public void testNestedObject() throws IOException {
     JsonTreeWriter writer = new JsonTreeWriter();
     writer.beginObject();
-    writer.name("A");
+    writer.writeFieldName("A");
     writer.beginObject();
-    writer.name("B");
+    writer.writeFieldName("B");
     writer.beginObject();
     writer.endObject();
     writer.endObject();
-    writer.name("C");
+    writer.writeFieldName("C");
     writer.beginObject();
     writer.endObject();
     writer.endObject();
@@ -116,14 +116,14 @@ public final class JsonTreeWriterTest {
   @Test
   public void testNameAsTopLevelValue() throws IOException {
     JsonTreeWriter writer = new JsonTreeWriter();
-    IllegalStateException e = assertThrows(IllegalStateException.class, () -> writer.name("hello"));
-    assertThat(e).hasMessageThat().isEqualTo("Did not expect a name");
+    IllegalStateException e = assertThrows(IllegalStateException.class, () -> writer.writeFieldName("hello"));
+    assertThat(e).hasMessageThat().isEqualTo("Did not expect a Name");
 
     writer.value(12);
     writer.close();
 
-    e = assertThrows(IllegalStateException.class, () -> writer.name("hello"));
-    assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a name.");
+    e = assertThrows(IllegalStateException.class, () -> writer.writeFieldName("hello"));
+    assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a Name.");
   }
 
   @Test
@@ -131,12 +131,12 @@ public final class JsonTreeWriterTest {
     JsonTreeWriter writer = new JsonTreeWriter();
 
     writer.beginArray();
-    IllegalStateException e = assertThrows(IllegalStateException.class, () -> writer.name("hello"));
-    assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a name.");
+    IllegalStateException e = assertThrows(IllegalStateException.class, () -> writer.writeFieldName("hello"));
+    assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a Name.");
 
     writer.value(12);
-    e = assertThrows(IllegalStateException.class, () -> writer.name("hello"));
-    assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a name.");
+    e = assertThrows(IllegalStateException.class, () -> writer.writeFieldName("hello"));
+    assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a Name.");
 
     writer.endArray();
 
@@ -147,9 +147,9 @@ public final class JsonTreeWriterTest {
   public void testTwoNames() throws IOException {
     JsonTreeWriter writer = new JsonTreeWriter();
     writer.beginObject();
-    writer.name("a");
-    IllegalStateException e = assertThrows(IllegalStateException.class, () -> writer.name("a"));
-    assertThat(e).hasMessageThat().isEqualTo("Did not expect a name");
+    writer.writeFieldName("a");
+    IllegalStateException e = assertThrows(IllegalStateException.class, () -> writer.writeFieldName("a"));
+    assertThat(e).hasMessageThat().isEqualTo("Did not expect a Name");
   }
 
   @Test
@@ -157,7 +157,7 @@ public final class JsonTreeWriterTest {
     JsonTreeWriter writer = new JsonTreeWriter();
     writer.setSerializeNulls(false);
     writer.beginObject();
-    writer.name("A");
+    writer.writeFieldName("A");
     writer.nullValue();
     writer.endObject();
     assertThat(writer.get().toString()).isEqualTo("{}");
@@ -168,7 +168,7 @@ public final class JsonTreeWriterTest {
     JsonTreeWriter writer = new JsonTreeWriter();
     writer.setSerializeNulls(true);
     writer.beginObject();
-    writer.name("A");
+    writer.writeFieldName("A");
     writer.nullValue();
     writer.endObject();
     assertThat(writer.get().toString()).isEqualTo("{\"A\":null}");
@@ -337,19 +337,19 @@ public final class JsonTreeWriterTest {
     MoreAsserts.assertOverridesMethods(JsonWriter.class, JsonTreeWriter.class, ignoredMethods);
   }
   /**
- * This test verifies the behavior of the JsonTreeWriter class when trying to write a name as a top-level value in a JSON array.
+ * This test verifies the behavior of the JsonTreeWriter class when trying to write a writeFieldName as a top-level value in a JSON array.
  */
   @Test
   public void testNameAsTopLevelValueInArray() throws IOException {
       JsonTreeWriter writer = new JsonTreeWriter();
       
       writer.beginArray();
-      IllegalStateException e = assertThrows(IllegalStateException.class, () -> writer.name("hello"));
-      assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a name.");
+      IllegalStateException e = assertThrows(IllegalStateException.class, () -> writer.writeFieldName("hello"));
+      assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a Name.");
   
       writer.value(12);
-      e = assertThrows(IllegalStateException.class, () -> writer.name("hello"));
-      assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a name.");
+      e = assertThrows(IllegalStateException.class, () -> writer.writeFieldName("hello"));
+      assertThat(e).hasMessageThat().isEqualTo("Please begin an object before writing a Name.");
   
       writer.endArray();
   

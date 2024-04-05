@@ -487,7 +487,7 @@ public class JsonWriter implements Closeable, Flushable {
    * @return this writer.
    */
   @CanIgnoreReturnValue
-  public JsonWriter name(String name) throws IOException {
+  public JsonWriter writeFieldName(String name) throws IOException {
     Objects.requireNonNull(name, "name == null");
     if (deferredName != null) {
       throw new IllegalStateException("Already wrote a name, expecting a value.");
