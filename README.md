@@ -25,3 +25,6 @@ Commit 5 : https://github.com/google/gson/commit/3796cb6034aadce50efc68fb63a7ec9
 
 J'ai ajouté lombok en ajoutant des dépendances dans le pom xml, il en résulte que j'ai pu l'utiliser dans le package com.google.gson.reflect dans la classe TypeToken afin de supprimer des getters. Cet utilisation de lombok permet de réduire la quantité de code boilerplate dans le code en général (en tout cas si il etait implémenté dans la pluaprt des classes de gson) Ca permet de reduire les risques d'erreurs humaines lors de la rédaction de ces méthodes génériques que sont les getters et setters.
 
+Commit 6 : https://github.com/google/gson/commit/a5a9371782134b1a38a78a78d93164b5e4dd4c62
+
+Comme il y avait une duplication de code dans les classes BagOfPrimitivesDeserializationBenchmark et CollectionsDeserializationBenchmark, j'ai créé une classe BenchmarkUtils permettant de supprimer cette duplication de code et simplifier le code dans les méthodes ou il y avait du code duppliqué. Il est beaucoup plus court et compréhensible après changement
