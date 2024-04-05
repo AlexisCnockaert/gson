@@ -69,30 +69,10 @@ public class CollectionsDeserializationBenchmark {
       jr.beginArray();
       List<BagOfPrimitives> bags = new ArrayList<>();
       while (jr.hasNext()) {
-        jr.beginObject();
-        long longValue = 0;
-        int intValue = 0;
-        boolean booleanValue = false;
-        String stringValue = null;
-        while (jr.hasNext()) {
-          String name = jr.nextName();
-          if (name.equals("longValue")) {
-            longValue = jr.nextLong();
-          } else if (name.equals("intValue")) {
-            intValue = jr.nextInt();
-          } else if (name.equals("booleanValue")) {
-            booleanValue = jr.nextBoolean();
-          } else if (name.equals("stringValue")) {
-            stringValue = jr.nextString();
-          } else {
-            throw new IOException("Unexpected name: " + name);
-          }
-        }
-        jr.endObject();
-        bags.add(new BagOfPrimitives(longValue, intValue, booleanValue, stringValue));
+          bags.add(BenchmarkUtils.readBagOfPrimitivesFromJsonReader(jr)); // Utilisation de la méthode utilitaire
       }
       jr.endArray();
-    }
+  }
   }
 
   /**

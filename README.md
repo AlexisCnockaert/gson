@@ -21,3 +21,7 @@ Commit 4 : https://github.com/google/gson/commit/b47d21ad12efd36c7cbecfcff764d2e
 Ici on s'attaque a la classe principale gson, étant déja dotée d'une methode newbuilder permettant de créer un gson avec la configuration actuelle de la classe, j'ai rajouter deux méthodes create permettant de créer un gson avec une config par défaut et un gson avec la config passée en paramètre, permettant une création plus large et prècise.
 Cette modification rend la situation résultante meileure qu'avant, offrant une meilleure lisibilité et facilité à utiliser la classe (qui est la principale ici).
 
+Commit 5 : https://github.com/google/gson/commit/3796cb6034aadce50efc68fb63a7ec9da836b7b7
+
+J'ai ajouté lombok en ajoutant des dépendances dans le pom xml, il en résulte que j'ai pu l'utiliser dans le package com.google.gson.reflect dans la classe TypeToken afin de supprimer des getters. Cet utilisation de lombok permet de réduire la quantité de code boilerplate dans le code en général (en tout cas si il etait implémenté dans la pluaprt des classes de gson) Ca permet de reduire les risques d'erreurs humaines lors de la rédaction de ces méthodes génériques que sont les getters et setters.
+
