@@ -410,6 +410,23 @@ public final class Gson {
   }
 
   /**
+   * Crée une nouvelle instance de Gson avec une configuration par défaut.
+   * @return Une nouvelle instance de Gson.
+   */
+  public static Gson create() {
+    return new GsonBuilder().create();
+}
+
+  /**
+   * Crée une nouvelle instance de Gson avec une configuration spécifiée.
+   * @param gsonBuilder Le constructeur GsonBuilder avec la configuration spécifiée.
+   * @return Une nouvelle instance de Gson avec la configuration spécifiée.
+   */
+  public static Gson create(GsonBuilder gsonBuilder) {
+      return gsonBuilder.create();
+  }
+
+  /**
    * @deprecated This method by accident exposes an internal Gson class; it might be removed in a
    *     future version.
    */
